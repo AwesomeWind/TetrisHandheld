@@ -1,13 +1,17 @@
-import { DotMatrix } from './dot-matrix.model';
-import { MainDotMatrix } from './main-dot-matrix.model';
+import { MainDotMatrix } from './main-matrix.model';
 import { MiniMatrix } from "./mini-matrix.model";
+
+
+const SCORE_MAX_LENGTH = 6;
+const LEVEL_MAX_LENGTH = 2;
+const LIVES_MAX_LENGTH = 2;
 
 enum HandState { UP, MIDDLE, DOWN }
 export interface DotMatrixSize {
     row: number;
     col: number;
 }
-export class DotMatrixDisplay {
+export class DisplayScreen {
     private _mainMatrix: MainDotMatrix = new MainDotMatrix();//主点阵
     private _score: number = 0;//分数
     private _level: number = 0;//关卡
@@ -26,6 +30,15 @@ export class DotMatrixDisplay {
         return this._score;
     }
     public set score(value: number) {
+        if(value < 0) {
+            this._score = 0;
+        }
+        // score max length is 6
+        const maxValue = Math.pow(10, SCORE_MAX_LENGTH) - 1;
+        if (value > maxValue) {
+            this._score = maxValue;
+            return;
+        }
         this._score = value;
     }
 
@@ -33,6 +46,15 @@ export class DotMatrixDisplay {
         return this._level;
     }
     public set level(value: number) {
+        if(value < 0) {
+            this._level = 0;
+        }
+        // level max length is 2
+        const maxValue = Math.pow(10, LEVEL_MAX_LENGTH) - 1;
+        if (value > maxValue) {
+            this._level = maxValue;
+            return;
+        }
         this._level = value;
     }
 
@@ -40,6 +62,15 @@ export class DotMatrixDisplay {
         return this._lives;
     }
     public set lives(value: number) {
+        if(value < 0) {
+            this._lives = 0;
+        }
+        // lives max length is 2
+        const maxValue = Math.pow(10, LIVES_MAX_LENGTH) - 1;
+        if (value > maxValue) {
+            this._lives = maxValue;
+            return;
+        }
         this._lives = value;
     }
 
